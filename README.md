@@ -1,34 +1,34 @@
-#How to use it
-##Find orphan Foreign Security Principals
+# How to use it
+## Find orphan Foreign Security Principals
 ```Powershell
 Get-OrphanForeignSecurityPrincipal
 ```
-##Export orphan Foreign Security Principals to a file
+## Export orphan Foreign Security Principals to a file
 ```Powershell
 Get-OrphanForeignSecurityPrincipal -TabDelimitedFile C:\temp\OFSP.txt
 ```
-##Remove orphan Foreign Security Principals
-###From the pipeline
+## Remove orphan Foreign Security Principals
+### From the pipeline
 ```Powershell
 Get-OrphanForeignSecurityPrincipal | Remove-OrphanForeignSecurityPrincipal
 ```
-###From a file
+### From a file
 ```Powershell
 Remove-OrphanForeignSecurityPrincipal -TabDelimitedFile C:\temp\OFSP.txt
 ```
-###Manually
+### Manually
 ```Powershell
 Remove-OrphanForeignSecurityPrincipal -DistinguishedName CN=S-1-5-21-1234567890-1234567890-1234567890-12345,CN=ForeignSecurityPrincipals,DC=contoso,DC=com
 ```
-#Additional information
-##Prerequisites
+# Additional information
+## Prerequisites
 This module uses cmdlets from the Microsoft ActiveDirectory module.
-##Preparation steps
+## Preparation steps
 Copy this module on a computer which has the ActiveDirectory module
 (usually to C:\Program Files\Windows Powershell\Modules)
-##Common parameters
+## Common parameters
 Common parameters like -WhatIf, -Verbose and -Confirm are fully supported.
-##Warning
+## Warning
 To determine if a Foreign Security Principal is orphan or not,
 this module tries to resolve the SID to a name.
 If you encounter connectivity issues, the name resolution will fail,
