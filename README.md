@@ -20,7 +20,7 @@ Remove-OrphanForeignSecurityPrincipal -TabDelimitedFile C:\temp\OFSP.txt
 ```
 ### Manually
 ```Powershell
-Remove-OrphanForeignSecurityPrincipal -DistinguishedName CN=S-1-5-21-1234567890-1234567890-1234567890-12345,CN=ForeignSecurityPrincipals,DC=contoso,DC=com
+Remove-OrphanForeignSecurityPrincipal -DistinguishedName 'CN=S-1-5-21-1234567890-1234567890-1234567890-12345,CN=ForeignSecurityPrincipals,DC=contoso,DC=com'
 ```
 # Additional information
 ## Prerequisites
