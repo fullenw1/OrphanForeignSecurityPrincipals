@@ -49,7 +49,7 @@ Get-ADObject -Filter 'IsDeleted -eq $TRUE' -IncludeDeletedObjects|?{$_.Distingui
 2. Then pipe it to the `Restore-ADObject` cmdlet.
 - Add the foreign account or group into all groups where it has formerly been.
 This will create the same ForeignSecurityPrincipal again.
-Hint: If you have still the export which you used to remove the ForeignSecurityPincipals,
+**Hint:** If you have still the export which you used to remove the ForeignSecurityPincipals,
 there is a column inside with the groupmembership.
 ## Automation
 There are several way to keep your Active Directory clean from orphan Foreign Security Principals.
