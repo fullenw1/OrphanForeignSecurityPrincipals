@@ -67,7 +67,7 @@ Here are some suggestions:
 3. Use the `Remove-OrphanForeignSecurityPrincipal` cmdlet associated to the file.
 ### Method 2: Balanced effort
 1. Schedule a script to export and count the number of entries.
-2. Depending on X which is the average number of accounts you delete in your environment:
+2. Depending on X which is the average number of accounts you delete in your environment since your last cleanup:
 - If the script finds less then X orphan Foreign Security Principals,
 the script removes them directly.
 - If the script finds more then X orphan Foreign Security Principals,
