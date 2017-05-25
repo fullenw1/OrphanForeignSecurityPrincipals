@@ -13,7 +13,7 @@ Get-OrphanForeignSecurityPrincipal -TabDelimitedFile C:\temp\OFSP.txt
 ```Powershell
 Get-OrphanForeignSecurityPrincipal | Remove-OrphanForeignSecurityPrincipal
 ```
-**For this method, please see the Warning section below!**
+**For the pipeline method, please see the Warning section below!**
 ### From a file
 ```Powershell
 Remove-OrphanForeignSecurityPrincipal -TabDelimitedFile C:\temp\OFSP.txt
@@ -33,8 +33,10 @@ Common parameters like -WhatIf, -Verbose and -Confirm are fully supported.
 ## Warning
 To determine if a Foreign Security Principal is orphan or not,
 this module tries to resolve the SID to a name.
+
 If you encounter connectivity issues, the name resolution will fail,
 and Foreign Security Principals will be incorectly interpreted as orphan.
+
 Thus, the prefered method to remove orphan Foreign Security Principals is via a file,
 because you can have look at the list before the removal.
 ## Restoring removed Foreign Security Principals
@@ -45,9 +47,10 @@ because you can have look at the list before the removal.
 Get-ADObject -Filter 'IsDeleted -eq $TRUE' -IncludeDeletedObjects|?{$_.DistinguishedName -like "CN=S-*"}
 ```
 2. Then pipe it to the `Restore-ADObject` cmdlet.
-- Add the foreign account or group into groups where it has formerly been.
+- Add the foreign account or group into all groups where it has formerly been.
 This will create the same ForeignSecurityPrincipal again.
-However, you have to add it to all matching groups again.
+Hint: If you have still the export which you used to remove the ForeignSecurityPincipals,
+there is a column inside with the groupmembership.
 ## Automation
 There are several way to keep your Active Directory clean from orphan Foreign Security Principals.
 Here are some suggestions:
