@@ -28,6 +28,13 @@ This module uses cmdlets from the Microsoft ActiveDirectory module.
 ## Preparation steps
 Copy this module on a computer which has the ActiveDirectory module
 (usually to C:\Program Files\Windows Powershell\Modules)
+## Export format
+Because the export contains both Foreign Security Principal's Distinguished Names (with coma inside)
+and group membership (with semi-colon inside), the choice has been made to export the list in a tab delimited format.
+
+Therefore, if you edit the export in Excel, you must save modifications as a <.txt> file.
+
+Another way to edit the export is with any text editor like Notepad.
 ## Common parameters
 Common parameters like -WhatIf, -Verbose and -Confirm are fully supported.
 ## Warning
