@@ -53,7 +53,7 @@ If you are not sure, you can simulate the deletion whit the `-WhatIf` parameter.
 More about activating the Recycle Bin [here](https://technet.microsoft.com/en-us/library/dd379481(v=ws.10).aspx)
 1. First find your object(s) with a query like this one:
 ```Powershell
-Get-ADObject -Filter 'IsDeleted -eq $TRUE' -IncludeDeletedObjects|?{$_.DistinguishedName -like "CN=S-*"}
+Get-ADObject -Filter 'IsDeleted -eq $TRUE' -IncludeDeletedObjects | Where-Object {$_.DistinguishedName -like "CN=S-*"}
 ```
 2. Then pipe it to the `Restore-ADObject` cmdlet.
 - Add the foreign account or group into all groups where it has formerly been.
