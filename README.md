@@ -34,7 +34,7 @@ and group membership (with semi-colon inside), the choice has been made to expor
 
 Therefore, if you edit the export in Excel, you must save modifications as a <.txt> file.
 
-Another way to edit the export is with any text editor like Notepad.
+Another way to edit the export is with any "neutral" text editor like Notepad.
 ## Common parameters
 Common parameters like `-WhatIf`, `-Verbose` and `-Confirm` are fully supported.
 ## Warning
@@ -44,12 +44,12 @@ this module tries to resolve the SID to a name.
 If you encounter connectivity issues, the name resolution will fail,
 and Foreign Security Principals will be incorectly interpreted as orphan.
 
-If you are not sure, you can simulate the deletion whit the `-WhatIf` parameter.
-
 Thus, the prefered method to remove orphan Foreign Security Principals is via a file,
 because you can have look at the list before the removal.
+
+If you are not sure, you can simulate the deletion whit the `-WhatIf` parameter.
 ## Restoring removed Foreign Security Principals
-- Restore via Powershell from the Recycle Bin (must be activated before any deletion occured)
+- Restore via Powershell from the Recycle Bin (must be activated before any deletion occured).
 More about activating the Recycle Bin [here](https://technet.microsoft.com/en-us/library/dd379481(v=ws.10).aspx)
 1. First find your object(s) with a query like this one:
 ```Powershell
