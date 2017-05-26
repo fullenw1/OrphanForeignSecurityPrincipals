@@ -26,7 +26,7 @@ Remove-OrphanForeignSecurityPrincipal -DistinguishedName 'CN=S-1-5-21-1234567890
 ## Prerequisites
 This module uses cmdlets from the Microsoft ActiveDirectory module.
 ## Preparation steps
-Copy this module on a computer which has the ActiveDirectory module
+Copy this module to a computer which has the ActiveDirectory module
 (usually to C:\Program Files\Windows Powershell\Modules)
 ## Export format
 Because the export contains both Foreign Security Principal's Distinguished Names (with coma inside)
@@ -42,16 +42,16 @@ To determine if a Foreign Security Principal is orphan or not,
 this module tries to resolve the SID to a name.
 
 If you encounter connectivity issues, the name resolution will fail,
-and Foreign Security Principals will be incorectly interpreted as orphan.
+and Foreign Security Principals will be incorrectly interpreted as an orphan..
 
-Thus, the prefered method to remove orphan Foreign Security Principals is via a file,
+Thus, the preferred method to remove orphan Foreign Security Principals is via a file,
 because you can have look at the list before the removal.
 
 If you are not sure, you can simulate the deletion whit the `-WhatIf` parameter.
 ## Restoring removed Foreign Security Principals
-- Restore via Powershell from the Recycle Bin (must be activated before any deletion occured).
-More about activating the Recycle Bin [here](https://technet.microsoft.com/en-us/library/dd379481(v=ws.10).aspx)
-1. First find your object(s) with a query like this one:
+- Restore via Powershell from the Recycle Bin (must be activated before any deletion occurred).
+More about activating the Recycle Bin can be found [here](https://technet.microsoft.com/en-us/library/dd379481(v=ws.10).aspx)
+1. First, find your object(s) with a query like this one:
 ```Powershell
 Get-ADObject -Filter 'IsDeleted -eq $TRUE' -IncludeDeletedObjects | Where-Object {$_.DistinguishedName -like "CN=S-*"}
 ```
@@ -59,20 +59,20 @@ Get-ADObject -Filter 'IsDeleted -eq $TRUE' -IncludeDeletedObjects | Where-Object
 - Add the foreign account or group into all groups where it has formerly been.
 This will create the same ForeignSecurityPrincipal again.
 **Hint:** If you have still the export file which you used to remove the ForeignSecurityPincipals,
-there is a column inside with the groupmembership.
+there is a column inside with the group membership.
 ## Automation
-There are several way to keep your Active Directory clean from orphan Foreign Security Principals.
+There are several ways to keep your Active Directory clean from orphan Foreign Security Principals.
 Here are some suggestions:
 ### Method 1: For better security
 1. Schedule a script to export the list to a file and send a mail.
 2. Review the file and update if necessary.
-3. Use the `Remove-OrphanForeignSecurityPrincipal` cmdlet associated to the file.
+3. Use the `Remove-OrphanForeignSecurityPrincipal` cmdlet associated with the file.
 ### Method 2: Balanced effort
 1. Schedule a script to export and count the number of entries.
 2. Depending on X which is the average number of accounts you deleted in your environment since your last cleanup:
-- If the script finds less then X orphan Foreign Security Principals,
+- If the script finds less than X orphan Foreign Security Principals,
 the script removes them directly.
 - If the script finds more then X orphan Foreign Security Principals,
-the script sends a mail with the export as attachment for further verification.
+the script sends a mail with the export as an attachment for further verification.
 3. If the script has sent a mail, review the file and update if necessary.
-4. If you reviewed the file, use the `Remove-OrphanForeignSecurityPrincipal` cmdlet associated to this file.
+4. If you reviewed the file, use the `Remove-OrphanForeignSecurityPrincipal` cmdlet associated with this file.
