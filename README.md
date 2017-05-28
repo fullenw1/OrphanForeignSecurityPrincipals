@@ -47,7 +47,7 @@ and Foreign Security Principals will be incorrectly interpreted as an orphan..
 Thus, the preferred method to remove orphan Foreign Security Principals is via a file,
 because you can have look at the list before the removal.
 
-If you are not sure, you can simulate the deletion whit the `-WhatIf` parameter.
+You can also simulate a deletion whit the -WhatIf parameter.
 ## Restoring removed Foreign Security Principals
 - Restore via Powershell from the Recycle Bin (must be activated before any deletion occurred).
 More about activating the Recycle Bin can be found [here](https://technet.microsoft.com/en-us/library/dd379481(v=ws.10).aspx)
