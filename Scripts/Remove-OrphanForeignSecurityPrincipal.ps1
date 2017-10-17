@@ -1,4 +1,4 @@
-﻿Function Remove-OrphanForeignSecurityPrincipal
+Function Remove-OrphanForeignSecurityPrincipal
 {
     <#
     .SYNOPSIS
@@ -19,11 +19,11 @@
         Remove-OrphanForeignSecurityPrincipal -TabDelimitedFile c:\temp\OFSP.txt
     .EXAMPLE
         Pipe the result of the Find-OrphanForeignSecurityPrincipal cmdlet the the Remove-OrphanForeignSecurityPrincipal cmdlet.
-        
+
         Find-OrphanForeignSecurityPrincipal |select -First 5|Remove-OrphanForeignSecurityPrincipal
     .EXAMPLE
         Specify ForeignSecurityPrincipals' distinguished names as parameter.
-        
+
         Remove-OrphanForeignSecurityPrincipal -DistinguishedName 'CN=S-1-5-21-1595408694-1749029380-1551332766-35442,CN=ForeignSecurityPrincipals,DC=contoso,DC=com','CN=S-1-5-21-1595408694-1749029380-1551332766-37718,CN=ForeignSecurityPrincipals,DC=contoso,DC=com'
     .INPUTS
         System.String[]
@@ -34,77 +34,70 @@
     .LINK
         Remove-OrphanForeignSecurityPrincipal.ps1
     #>
-    
+
     [Alias('rofsp')]
 
     [CmdletBinding(
-                    SupportsShouldProcess=$true,
-                    DefaultParameterSetName='Pipe'
-                   )]
+        SupportsShouldProcess = $true,
+        DefaultParameterSetName = 'Pipe'
+    )]
 
     Param(
-            [Parameter(
-                        ParameterSetName='Pipe',
-                        ValueFromPipelineByPropertyName=$true
-                       )]
-            [ValidateNotNullOrEmpty()]
-            [Array]$DistinguishedName,
+        [Parameter(
+            ParameterSetName = 'Pipe',
+            ValueFromPipelineByPropertyName = $true
+        )]
+        [ValidateNotNullOrEmpty()]
+        [Array]$DistinguishedName,
 
-            [Parameter(
-                        ParameterSetName='File',
-                        HelpMessage='A file name or a full path.'                       
-                       )]
-            [ValidateScript({Test-Path -Path $_})]
-            [String]$TabDelimitedFile
-         )
+        [Parameter(
+            ParameterSetName = 'File',
+            HelpMessage = 'A file name or a full path.'
+        )]
+        [ValidateScript( {Test-Path -Path $_})]
+        [String]$TabDelimitedFile
+    )
 
     Begin
     {
-        Set-StrictMode -Version Latest
-        
         #Requires -Modules ActiveDirectory
 
-        If($PSBoundParameters['Debug'])
-        {$DebugPreference='Continue'}
+        If ($PSBoundParameters['Debug'])
+        {$DebugPreference = 'Continue'}
 
-        If($PSBoundParameters['TabDelimitedFile'])
+        If ($PSBoundParameters['TabDelimitedFile'])
         {
             Write-Verbose 'Parsing file...'
-            $Params=@{
-                        Path      = $TabDelimitedFile
-                        Delimiter = "`t"
-                     }
-            
-            $OrphanFSPList=Import-Csv @Params
+            $Params = @{
+                Path      = $TabDelimitedFile
+                Delimiter = "`t"
+            }
 
-            If($OrphanFSPList)
+            $OrphanFSPList = Import-Csv @Params
+
+            If ($OrphanFSPList)
             {
-                foreach($OrphanFSP in $OrphanFSPList)
+                foreach ($OrphanFSP in $OrphanFSPList)
                 {
-                    $DistinguishedName+=$OrphanFSP.DistinguishedName
-                
-                    $Message="Found {0}" -f $DistinguishedName
+                    $Message = "Found {0}" -f $OrphanFSP.DistinguishedName
                     Write-Debug -Message $Message
+
+                    $DistinguishedName += $OrphanFSP.DistinguishedName
                 }
             }
             Else
-            {
-                Throw 'The file does not contain a column named DistinguishedName or the column is empty!'
-            }
+            {Throw "The $$TabDelimitedFile file is empty!"}
         }
     }
 
     Process
     {
-        foreach($DN in $DistinguishedName)
+        foreach ($DN in $DistinguishedName)
         {
-            $Action='Remove'
-            If($PSCmdlet.ShouldProcess($DN, $Action))
-            {
-                Remove-ADObject -Identity $DN -Confirm:$false
-            }
+            If ($PSCmdlet.ShouldProcess($DN, 'Remove'))
+            {Remove-ADObject -Identity $DN -Confirm:$false}
         }
     }
 
-    End{}
-}   
+    End {}
+}
